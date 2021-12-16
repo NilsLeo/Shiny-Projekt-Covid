@@ -8,26 +8,48 @@ library(datasets)
 
 WP <- WorldPhones
 
+
 # Einlesen, Invertierung, neubenennung der Zeilen/ Spalten, Entfernen der Spalte"Berlin"
+
+heute <- format(Sys.time(), "%d.%m.%Y")
+
+
 CSV <- read.csv2("https://www.berlin.de/lageso/_assets/gesundheit/publikationen/corona/bezirkstabelle.csv")
 df <- data.frame(CSV)
 df <- t(df)
-colnames(df) <- df[1,]
-df <- df[-1,]
-df <- df[,-13]
 
 # Neue tabelle mit einer Zeile für die heutigen Fallzahlen
-heutigeFallzahl <- df[1,]
-heutigeFallzahl <- t(heutigeFallzahl)
-heutigeFallzahl <- cbind( new_col = format(Sys.time(), "%d-%m-%Y"), heutigeFallzahl)
-datumFallzahl <- heutigeFallzahl[,1]
-rownames(heutigeFallzahl) <- datumFallzahl
-heutigeFallzahl <- heutigeFallzahl[,-1]
+
+heutigeFallzahl <- data.frame(df[1,], df[2,])
 heutigeFallzahl <-t(heutigeFallzahl)
+colnames(heutigeFallzahl) <- heutigeFallzahl[1,]
+heutigeFallzahl <- heutigeFallzahl[,-13]
+
+columns <- heutigeFallzahl[1,]
+
+heutigeFallzahl <- heutigeFallzahl[-1,]
+heutigeFallzahl <-t(heutigeFallzahl)
+heutigeFallzahl <- cbind( heute, heutigeFallzahl)
+datumFallzahl <- heutigeFallzahl[,1]
+heutigeFallzahl <- data.frame(heutigeFallzahl[,-1])
+
+vektor <- as.vector(as.numeric(heutigeFallzahl$heutigeFallzahl....1.))
+heutigeFallzahl <- data.frame(heutigeFallzahl, vektor)
+heutigeFallzahl <- heutigeFallzahl[,-1]
+
+
+heutigeFallzahl <-t(heutigeFallzahl)
+colnames(heutigeFallzahl) <- as.character(columns)
 rownames(heutigeFallzahl) <- datumFallzahl
+
+str(WorldPhones)
+
+str(heutigeFallzahl)
 
  # Tabelle mit den Fallzahlen für alle beobachteten Tage
 Fallzahlen <- heutigeFallzahl
+Fallzahlen
+
 
 ui <- # Use a fluid Bootstrap layout
   fluidPage(    
