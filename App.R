@@ -37,18 +37,21 @@ vektor <- as.vector(as.numeric(heutigeFallzahl$heutigeFallzahl....1.))
 heutigeFallzahl <- data.frame(heutigeFallzahl, vektor)
 heutigeFallzahl <- heutigeFallzahl[,-1]
 
-
-heutigeFallzahl <-t(heutigeFallzahl)
+heutigeFallzahl <-data.frame(t(heutigeFallzahl))
 colnames(heutigeFallzahl) <- as.character(columns)
 rownames(heutigeFallzahl) <- datumFallzahl
 
-str(WorldPhones)
-
-str(heutigeFallzahl)
+heutigeFallzahlvektor <- c(as.numeric(heutigeFallzahl[1,]))
+heutigeFallzahlvektor
 
  # Tabelle mit den Fallzahlen für alle beobachteten Tage
-Fallzahlen <- heutigeFallzahl
+
+Fallzahlen <- rbind(heutigeFallzahl, heutigeFallzahlvektor)
+
 Fallzahlen
+
+
+
 
 
 ui <- # Use a fluid Bootstrap layout
